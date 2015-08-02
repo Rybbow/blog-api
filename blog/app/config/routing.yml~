@@ -1,0 +1,3 @@
+x_blog:
+    resource: "@XBlogBundle/Resources/config/routing.yml"
+    prefix:   /

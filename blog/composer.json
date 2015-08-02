@@ -1,0 +1,90 @@
+{
+    "name": "thekipper/blog",
+    "license": "private",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "X\\": "src/"
+        }
+    },
+    "require": {
+        "php":                                      ">=5.6.11",
+        "symfony/symfony":                          "~2.7.2",
+        "symfony/assetic-bundle":                   "~2.3",
+        "symfony/swiftmailer-bundle":               "~2.3",
+        "symfony/monolog-bundle":                   "~2.4",
+
+        "sensio/distribution-bundle":               "~4.0",
+        "sensio/framework-extra-bundle":            "~3.0,>=3.0.2",
+
+        "incenteev/composer-parameter-handler":     "~2.0",
+
+        "doctrine/orm":                             "~2.5",
+        "doctrine/dbal":                            "~2.5",
+        "doctrine/doctrine-bundle":                 "~1.4",
+        "doctrine/migrations":                      "~1.0.0-rc1@dev",
+        "doctrine/doctrine-migrations-bundle":      "~1.0",
+        "doctrine/doctrine-cache-bundle":           "~1.0",
+
+        "sp/bower-bundle":                          "^0.11.0"
+    },
+    "require-dev": {
+        "sensio/generator-bundle":                          "~2.3",
+
+        "doctrine/data-fixtures":                           "~1.1",
+        "doctrine/doctrine-fixtures-bundle":                "~2.2@dev",
+        "fzaninotto/faker":                                 "~1.4",
+        "nelmio/alice":                                     "~2.0",
+        "knplabs/rad-fixtures-load":                        "~1.2",
+
+        "phpspec/phpspec":                                  "~2.2",
+
+        "behat/behat":                                      "~3.0",
+        "behat/mink":                                       "~1.4",
+        "behat/common-contexts":                            "~1.2@dev",
+        "behat/symfony2-extension":                         "*",
+        "behat/mink-extension":                             "*",
+        "behat/mink-zombie-driver":                         "*",
+        "kriswallsmith/buzz":                               "~0.10",
+
+        "mattsches/version-eye-bundle":                     "dev-master"
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "SymfonyStandard\\Composer::hookRootPackageInstall"
+        ],
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "Sp\\BowerBundle\\Composer\\ScriptHandler::bowerInstall"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "Sp\\BowerBundle\\Composer\\ScriptHandler::bowerInstall"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
+        "symfony-web-dir": "web",
+        "symfony-assets-install": "symlink",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        }
+    }
+}
