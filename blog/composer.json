@@ -3,8 +3,8 @@
     "license": "private",
     "type": "project",
     "autoload": {
-        "psr-4": {
-            "X\\": "src/"
+        "psr-0": {
+            "": "src/"
         }
     },
     "require": {
@@ -26,7 +26,9 @@
         "doctrine/doctrine-migrations-bundle":      "~1.0",
         "doctrine/doctrine-cache-bundle":           "~1.0",
 
-        "sp/bower-bundle":                          "^0.11.0"
+        "sp/bower-bundle":                          "~0.11.0",
+        "ramsey/uuid":                              "~2.8",
+        "beberlei/assert": "^2.3"
     },
     "require-dev": {
         "sensio/generator-bundle":                          "~2.3",
@@ -60,8 +62,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
-            "Sp\\BowerBundle\\Composer\\ScriptHandler::bowerInstall"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -70,8 +71,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
-            "Sp\\BowerBundle\\Composer\\ScriptHandler::bowerInstall"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ]
     },
     "config": {

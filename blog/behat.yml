@@ -1,0 +1,11 @@
+default:
+    suites:
+        domain:
+            contexts:   [ BlogContext ]
+        ui:
+            contexts:   [ WebBlogContext ]
+            type:       symfony_bundle
+            bundle:     XBlogBundle
+            filters:    { tags: '@ui' }
+    extensions:
+        Behat\Symfony2Extension: ~
