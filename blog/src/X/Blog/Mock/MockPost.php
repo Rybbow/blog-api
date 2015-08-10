@@ -8,6 +8,7 @@
 
 namespace X\Blog\Mock;
 
+use X\Blog\Model\Displayable\DisplayableInterface;
 use X\Blog\Model\Post;
 
 /**
@@ -17,4 +18,11 @@ use X\Blog\Model\Post;
  */
 class MockPost extends Post
 {
+    /**
+     * @param DisplayableInterface $displayable
+     */
+    protected function verifyDisplayable(DisplayableInterface $displayable)
+    {
+
+    }
 }

@@ -32,6 +32,8 @@ class TypedCollection extends AbstractLazyCollection
      */
     public function __construct($type, Collection $collection = null)
     {
+        // @todo verify value integrity in passed collection -> doInitialize
+
         $this->type       = $type;
         $this->collection = $collection ? : new ArrayCollection();
     }

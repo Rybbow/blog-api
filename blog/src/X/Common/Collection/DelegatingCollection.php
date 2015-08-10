@@ -6,14 +6,15 @@
  * file that was distributed with this source code.
  */
 
-namespace X\Blog\Model;
+namespace X\Common\Collection;
+
 
 /**
- * Interface ContentInterface
+ * Class DelegatingCollection
  *
- * @author  Michał Rybnik <michal.rybnik@fuero.pl> 
+ * @author  Michał Rybnik <rybbow@gmail.com> 
  */
-interface ContentInterface
+class DelegatingCollection
 {
 
 }

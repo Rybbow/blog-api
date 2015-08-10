@@ -8,7 +8,10 @@
 
 namespace X\Blog\Model\Post;
 
+use X\Blog\Model\Displayable\DisplayableInterface;
+use X\Blog\Model\Displayable\Page;
 use X\Blog\Model\Post;
+use X\Common\Exception\InvalidTypeException;
 
 /**
  * Class Article
@@ -17,4 +20,14 @@ use X\Blog\Model\Post;
  */
 class Article extends Post
 {
+    /**
+     * @param DisplayableInterface $displayable
+     */
+    protected function verifyDisplayable(DisplayableInterface $displayable)
+    {
+        if (!$displayable instanceof Page) {
+            throw new InvalidTypeException($displayable, Page::class);
+        }
+    }
+
 }

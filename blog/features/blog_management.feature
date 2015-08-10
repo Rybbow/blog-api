@@ -6,5 +6,5 @@ Feature: Blog management
     @ui
     Scenario: Creating a new blog post
         Given there is a blog I own
-        When I add a new post with title "My first blog post"
+        When I add a new article with title "My first blog post" and content "<strong>Some content</strong>"
         Then the new post should be added to my blog

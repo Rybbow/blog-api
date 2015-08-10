@@ -10,18 +10,20 @@ namespace spec\X\Blog\Mock;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use X\Blog\Mock\MockPost;
+use X\Blog\Model\Collection\Displayables;
+use X\Blog\Model\Content;
 use X\Blog\Model\Post;
 use X\Blog\Model\ValueObject\PostInfo;
 use X\Blog\Model\ValueObject\Slug;
 use X\Blog\Model\ValueObject\Title;
-use X\Blog\Model\ValueObject\TitleInfo;
+use X\Common\Collection\ImmutableCollection;
+use X\Common\Model\String\Text;
 
 class MockPostSpec extends ObjectBehavior
 {
-    function let(PostInfo $postInfo)
+    function let(PostInfo $postInfo, Content $content)
     {
-        $this->beConstructedWith($postInfo);
+        $this->beConstructedWith($postInfo, $content);
     }
 
     function it_is_initializable()
@@ -41,5 +43,19 @@ class MockPostSpec extends ObjectBehavior
         $postInfo->getSlug()->willReturn($slug);
 
         $this->getSlug()->shouldBe($slug);
+    }
+
+    function it_has_teaser_provided_in_content(Content $content, Text $teaser)
+    {
+        $content->getTeaser()->willReturn($teaser);
+
+        $this->getTeaser()->shouldBe($teaser);
+    }
+
+    function it_has_immutable_displayables_provided_in_content(Content $content, Displayables $displayables)
+    {
+        $content->getDisplayables()->willReturn($displayables);
+
+        $this->getDisplayables()->shouldBeAnInstanceOf(ImmutableCollection::class);
     }
 }

@@ -45,6 +45,7 @@ class IndexedTypedCollection extends TypedCollection
         $this->keyType      = $keyType;
         $this->keyExtractor = $keyExtractor;
 
+        // @todo verify key integrity in passed collection -> doInitialize
         parent::__construct($type, $collection);
     }
 

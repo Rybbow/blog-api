@@ -8,9 +8,12 @@
 
 namespace X\Blog\Service\Factory;
 
+use X\Blog\Model\Content;
+use X\Blog\Model\Displayable\DisplayableInterface;
+use X\Blog\Model\Displayable\Page;
 use X\Blog\Model\Post\Article;
 use X\Blog\Model\ValueObject\PostInfo;
-use X\Blog\Model\ContentInterface;
+use X\Common\Model\String\Text;
 
 /**
  * Class ArticleFactory
@@ -19,9 +22,26 @@ use X\Blog\Model\ContentInterface;
  */
 class ArticleFactory extends AbstractPostFactory
 {
-    protected function doCreate(PostInfo $postInfo, ContentInterface $content)
+    /**
+     * @param PostInfo $postInfo
+     * @param Content  $content
+     *
+     * @return Article
+     */
+    protected function doCreate(PostInfo $postInfo, Content $content)
     {
-        return new Article($postInfo);
+        return new Article($postInfo, $content);
     }
+
+    /**
+     * @param mixed $raw
+     *
+     * @return DisplayableInterface
+     */
+    protected function doConvertToDisplayable($raw)
+    {
+        return new Page(new Text($raw));
+    }
+
 
 }

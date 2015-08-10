@@ -8,14 +8,18 @@
 
 namespace X\Blog\Service\Factory;
 
+use Doctrine\Common\Collections\Collection;
 use X\Blog\Model\Blog;
-use X\Blog\Model\ContentInterface;
+use X\Blog\Model\Collection\Displayables;
+use X\Blog\Model\Content;
+use X\Blog\Model\Displayable\DisplayableInterface;
 use X\Blog\Model\Post;
 use X\Blog\Model\ValueObject\DateInfo;
 use X\Blog\Model\ValueObject\PostInfo;
 use X\Blog\Model\ValueObject\Title;
 use X\Blog\Model\ValueObject\TitleInfo;
 use X\Blog\Service\Slug\SlugifierInterface;
+use X\Common\Model\String\Text;
 
 /**
  * Class PostFactory
@@ -36,19 +40,27 @@ abstract class AbstractPostFactory
     }
 
     /**
-     * @param Blog             $blog
-     * @param Title            $title
-     * @param ContentInterface $content
+     * @param Blog       $blog
+     * @param Title      $title
+     * @param Text       $teaser
+     * @param Collection $rawDisplayables A collection of raw values that will be converted into displayables that
+     *                                    this Post subtype handles.
      *
      * @return Post
      */
-    final public function create(Blog $blog, Title $title, ContentInterface $content)
+    final public function create(Blog $blog, Title $title, Text $teaser, Collection $rawDisplayables)
     {
         $slug     = $this->slugifier->slugify($title);
         $postInfo = new PostInfo(
             new TitleInfo($title, $slug),
             new DateInfo()
         );
+        $displayables = new Displayables();
+        foreach ($rawDisplayables as $rawDisplayable) {
+            $displayable = $this->doConvertToDisplayable($rawDisplayable);
+            $displayables->add($displayable);
+        }
+        $content  = new Content($teaser, $displayables);
 
         $post = $this->doCreate($postInfo, $content);
         $blog->addPost($post);
@@ -57,10 +69,17 @@ abstract class AbstractPostFactory
     }
 
     /**
-     * @param PostInfo         $postInfo
-     * @param ContentInterface $content
+     * @param PostInfo $postInfo
+     * @param Content  $content
      *
      * @return Post
      */
-    abstract protected function doCreate(PostInfo $postInfo, ContentInterface $content);
+    abstract protected function doCreate(PostInfo $postInfo, Content $content);
+
+    /**
+     * @param mixed $raw
+     *
+     * @return DisplayableInterface
+     */
+    abstract protected function doConvertToDisplayable($raw);
 }

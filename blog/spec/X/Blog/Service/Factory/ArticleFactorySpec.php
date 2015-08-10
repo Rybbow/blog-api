@@ -8,16 +8,16 @@
 
 namespace spec\X\Blog\Service\Factory;
 
+use Doctrine\Common\Collections\Collection;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Symfony\Component\VarDumper\VarDumper;
 use X\Blog\Model\Blog;
-use X\Blog\Model\ContentInterface;
 use X\Blog\Model\Post\Article;
 use X\Blog\Model\ValueObject\Slug;
 use X\Blog\Model\ValueObject\Title;
 use X\Blog\Service\Factory\ArticleFactory;
 use X\Blog\Service\Slug\SlugifierInterface;
+use X\Common\Model\String\Text;
 
 class ArticleFactorySpec extends ObjectBehavior
 {
@@ -34,7 +34,8 @@ class ArticleFactorySpec extends ObjectBehavior
     function it_creates_an_article(
         Blog $blog,
         Title $title,
-        ContentInterface $content,
+        Text $teaser,
+        Collection $rawDisplayables,
         SlugifierInterface $slugifier,
         Slug $slug)
     {
@@ -45,6 +46,8 @@ class ArticleFactorySpec extends ObjectBehavior
                 && $argument->getSlug() === $slug->getWrappedObject();
         }))->shouldBeCalled();
 
-        $this->create($blog, $title, $content)->shouldBeAnInstanceOf(Article::class);
+        $rawDisplayables->getIterator()->willReturn(new \ArrayIterator([]));
+
+        $this->create($blog, $title, $teaser, $rawDisplayables)->shouldBeAnInstanceOf(Article::class);
     }
 }

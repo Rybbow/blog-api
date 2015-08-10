@@ -6,17 +6,14 @@
  * file that was distributed with this source code.
  */
 
-namespace X\Blog\Model\Content;
-
-use X\Blog\Model\ContentInterface;
-
+namespace X\Blog\Model\Displayable;
 
 /**
- * Class NullContent
+ * Interface DisplayableInterface
  *
- * @author  Michał Rybnik <rybbow@gmail.com> 
+ * @author  Michał Rybnik <michal.rybnik@fuero.pl> 
  */
-class NullContent implements ContentInterface
+interface DisplayableInterface
 {
 
 }

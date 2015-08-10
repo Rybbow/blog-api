@@ -8,8 +8,10 @@
 
 namespace X\Blog\Model;
 
+use X\Blog\Model\Displayable\DisplayableInterface;
 use X\Blog\Model\ValueObject\PostInfo;
-
+use X\Common\Collection\ImmutableCollection;
+use X\Common\Model\String\Text;
 
 /**
  * Class Post
@@ -21,12 +23,17 @@ abstract class Post
     /** @var PostInfo */
     private $info;
 
+    /** @var Content */
+    private $content;
+
     /**
      * @param PostInfo $info
+     * @param Content  $content
      */
-    public function __construct(PostInfo $info)
+    public function __construct(PostInfo $info, Content $content)
     {
-        $this->info = $info;
+        $this->info    = $info;
+        $this->content = $content;
     }
 
     /**
@@ -44,4 +51,37 @@ abstract class Post
     {
         return $this->info->getSlug();
     }
+
+    /**
+     * @return Text
+     */
+    public function getTeaser()
+    {
+        return $this->content->getTeaser();
+    }
+
+    /**
+     * @return ImmutableCollection
+     */
+    public function getDisplayables()
+    {
+        return new ImmutableCollection($this->content->getDisplayables());
+    }
+
+    /**
+     * @param DisplayableInterface $displayable
+     *
+     * @return bool
+     */
+    public function addDisplayable(DisplayableInterface $displayable)
+    {
+        $this->verifyDisplayable($displayable);
+
+        return $this->content->getDisplayables()->add($displayable);
+    }
+
+    /**
+     * @param DisplayableInterface $displayable
+     */
+    abstract protected function verifyDisplayable(DisplayableInterface $displayable);
 }

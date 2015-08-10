@@ -22,7 +22,10 @@ use X\Blog\Service\Factory\ArticleFactory;
 use X\BlogBundle\Service\Slug\DoctrineInflectorSlugifier;
 use X\Blog\Model\ValueObject\Slug;
 use X\Blog\Model\ValueObject\Title;
-use X\Blog\Model\Content\NullContent;
+use X\Blog\Model\Content;
+use X\Common\Model\String\Text;
+use Doctrine\Common\Collections\ArrayCollection;
+use X\Blog\Model\Collection\Displayables;
 
 /**
  * Class BlogContext
@@ -65,13 +68,14 @@ class BlogContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @When I add a new post with title :title
+     * @When I add a new article with title :title and content :content
      */
-    public function iAddANewPostWithTitleAndContent($title)
+    public function iAddANewArticleWithTitleAndContent($title, $content)
     {
-        $blog    = $this->repository->find($this->blogId);
-        $factory = new ArticleFactory(new DoctrineInflectorSlugifier());
-        $post    = $factory->create($blog, new Title($title), new NullContent());
+        $blog         = $this->repository->find($this->blogId);
+        $factory      = new ArticleFactory(new DoctrineInflectorSlugifier());
+        $displayables = new Displayables(new ArrayCollection([$content]));
+        $post         = $factory->create($blog, new Title($title), new Text($content), $displayables);
         $this->repository->save($blog);
 
         $this->slug = $post->getSlug();
@@ -85,7 +89,7 @@ class BlogContext implements Context, SnippetAcceptingContext
         $blog = $this->repository->find($this->blogId);
 
         if (!$blog->hasPost($this->slug)) {
-            return \Behat\Testwork\Tester\Result\TestResult::FAILED;
+            throw new TestFailedException();
         }
     }
 }
